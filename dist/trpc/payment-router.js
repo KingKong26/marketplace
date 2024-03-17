@@ -53,13 +53,14 @@ exports.paymentRouter = (0, trpc_1.router)({
                 case 0:
                     user = ctx.user;
                     productIds = input.productIds;
-                    if (productIds.length === 0)
-                        throw new server_1.TRPCError({ code: "BAD_REQUEST" });
+                    if (productIds.length === 0) {
+                        throw new server_1.TRPCError({ code: 'BAD_REQUEST' });
+                    }
                     return [4 /*yield*/, (0, get_payload_1.getPayloadClient)()];
                 case 1:
                     payload = _c.sent();
                     return [4 /*yield*/, payload.find({
-                            collection: "products",
+                            collection: 'products',
                             where: {
                                 id: {
                                     in: productIds,
@@ -68,9 +69,11 @@ exports.paymentRouter = (0, trpc_1.router)({
                         })];
                 case 2:
                     products = (_c.sent()).docs;
-                    filteredProducts = products.filter(function (prod) { return Boolean(prod.priceId); });
+                    filteredProducts = products.filter(function (prod) {
+                        return Boolean(prod.priceId);
+                    });
                     return [4 /*yield*/, payload.create({
-                            collection: "orders",
+                            collection: 'orders',
                             data: {
                                 _isPaid: false,
                                 products: filteredProducts.map(function (prod) { return prod.id; }),
@@ -87,7 +90,7 @@ exports.paymentRouter = (0, trpc_1.router)({
                         });
                     });
                     line_items.push({
-                        price: "price_1OunrfSAFHpjpKbGb6b6cFIr",
+                        price: 'price_1OCeBwA19umTXGu8s4p2G3aX',
                         quantity: 1,
                         adjustable_quantity: {
                             enabled: false,
@@ -99,8 +102,8 @@ exports.paymentRouter = (0, trpc_1.router)({
                     return [4 /*yield*/, stripe_1.stripe.checkout.sessions.create({
                             success_url: "".concat(process.env.NEXT_PUBLIC_SERVER_URL, "/thank-you?orderId=").concat(order.id),
                             cancel_url: "".concat(process.env.NEXT_PUBLIC_SERVER_URL, "/cart"),
-                            payment_method_types: ["card"],
-                            mode: "payment",
+                            payment_method_types: ['card', 'paypal'],
+                            mode: 'payment',
                             metadata: {
                                 userId: user.id,
                                 orderId: order.id,
@@ -112,7 +115,6 @@ exports.paymentRouter = (0, trpc_1.router)({
                     return [2 /*return*/, { url: stripeSession.url }];
                 case 6:
                     err_1 = _c.sent();
-                    console.log(err_1);
                     return [2 /*return*/, { url: null }];
                 case 7: return [2 /*return*/];
             }
@@ -131,7 +133,7 @@ exports.paymentRouter = (0, trpc_1.router)({
                 case 1:
                     payload = _c.sent();
                     return [4 /*yield*/, payload.find({
-                            collection: "orders",
+                            collection: 'orders',
                             where: {
                                 id: {
                                     equals: orderId,
@@ -141,7 +143,7 @@ exports.paymentRouter = (0, trpc_1.router)({
                 case 2:
                     orders = (_c.sent()).docs;
                     if (!orders.length) {
-                        throw new server_1.TRPCError({ code: "NOT_FOUND" });
+                        throw new server_1.TRPCError({ code: 'NOT_FOUND' });
                     }
                     order = orders[0];
                     return [2 /*return*/, { isPaid: order._isPaid }];

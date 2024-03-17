@@ -49,8 +49,8 @@ function constructMetadata(_a) {
             title: title,
             description: description,
             images: [image],
-            creator: "@kingkong24",
-        }, icons: icons, metadataBase: new URL("marketplace-production-ea01.up.railway.app") }, (noIndex && {
+            creator: "@404vishnu",
+        }, icons: icons, metadataBase: new URL("https://marketplace-production-ea01.up.railway.app") }, (noIndex && {
         robots: {
             index: false,
             follow: false,
