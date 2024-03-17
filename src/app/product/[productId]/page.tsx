@@ -16,20 +16,13 @@ interface PageProps {
 }
 
 const BREADCRUMBS = [
-  {
-    id: 1,
-    name: "Home",
-    href: "/",
-  },
-  {
-    id: 2,
-    name: "Products",
-    href: "/products",
-  },
+  { id: 1, name: "Home", href: "/" },
+  { id: 2, name: "Products", href: "/products" },
 ];
 
-const Product = async ({ params }: PageProps) => {
+const Page = async ({ params }: PageProps) => {
   const { productId } = params;
+
   const payload = await getPayloadClient();
 
   const { docs: products } = await payload.find({
@@ -44,6 +37,7 @@ const Product = async ({ params }: PageProps) => {
       },
     },
   });
+
   const [product] = products;
 
   if (!product) return notFound();
@@ -67,8 +61,8 @@ const Product = async ({ params }: PageProps) => {
                 <li key={breadcrumb.href}>
                   <div className="flex items-center text-sm">
                     <Link
-                      className="font-medium text-sm text-muted-foreground hover:text-gray-900"
                       href={breadcrumb.href}
+                      className="font-medium text-sm text-muted-foreground hover:text-gray-900"
                     >
                       {breadcrumb.name}
                     </Link>
@@ -86,29 +80,34 @@ const Product = async ({ params }: PageProps) => {
                 </li>
               ))}
             </ol>
+
             <div className="mt-4">
               <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
                 {product.name}
               </h1>
             </div>
+
             <section className="mt-4">
               <div className="flex items-center">
                 <p className="font-medium text-gray-900">
                   {formatPrice(product.price)}
                 </p>
+
                 <div className="ml-4 border-l text-muted-foreground border-gray-300 pl-4">
                   {label}
                 </div>
               </div>
+
               <div className="mt-4 space-y-6">
                 <p className="text-base text-muted-foreground">
                   {product.description}
                 </p>
               </div>
+
               <div className="mt-6 flex items-center">
                 <Check
-                  className="h-5 w-5 flex-shrink-0 text-green-500"
                   aria-hidden="true"
+                  className="h-5 w-5 flex-shrink-0 text-green-500"
                 />
                 <p className="ml-2 text-sm text-muted-foreground">
                   Eligible for instant delivery
@@ -116,11 +115,15 @@ const Product = async ({ params }: PageProps) => {
               </div>
             </section>
           </div>
+
+          {/* Product images */}
           <div className="mt-10 lg:col-start-2 lg:row-span-2 lg:mt-0 lg:self-center">
             <div className="aspect-square rounded-lg">
               <ImageSlider urls={validUrls} />
             </div>
           </div>
+
+          {/* add to cart part */}
           <div className="mt-10 lg:col-start-1 lg:row-start-2 lg:max-w-lg lg:self-start">
             <div>
               <div className="mt-10">
@@ -141,14 +144,15 @@ const Product = async ({ params }: PageProps) => {
           </div>
         </div>
       </div>
+
       <ProductReel
         href="/products"
         query={{ category: product.category, limit: 4 }}
         title={`Similar ${label}`}
-        subtitle={`Browse similar high-quality ${label} just like ${product.name}`}
+        subtitle={`Browse similar high-quality ${label} just like '${product.name}'`}
       />
     </MaxWidthWrapper>
   );
 };
 
-export default Product;
+export default Page;

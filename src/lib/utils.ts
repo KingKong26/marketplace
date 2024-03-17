@@ -54,10 +54,10 @@ export function constructMetadata({
       title,
       description,
       images: [image],
-      creator: "@kingkong24",
+      creator: "@404vishnu",
     },
     icons,
-    metadataBase: new URL("marketplace-production-ea01.up.railway.app"),
+    metadataBase: new URL("https://marketplace-production-ea01.up.railway.app"),
     ...(noIndex && {
       robots: {
         index: false,
