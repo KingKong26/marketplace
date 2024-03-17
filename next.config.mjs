@@ -8,6 +8,11 @@ const nextConfig = {
         port: "3000",
         protocol: "http",
       },
+      {
+        hostname: "marketplace-production-ea01.up.railway.app",
+        pathname: "**",
+        protocol: "https",
+      },
     ],
   },
 };
