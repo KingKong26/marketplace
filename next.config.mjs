@@ -10,9 +10,7 @@ const nextConfig = {
       },
       {
         hostname: "marketplace-production-ea01.up.railway.app",
-        pathname: "/media/**",
         protocol: "https",
-        port: "",
       },
     ],
   },
