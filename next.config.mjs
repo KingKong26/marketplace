@@ -12,6 +12,10 @@ const nextConfig = {
         hostname: "marketplace-production-ea01.up.railway.app",
         protocol: "https",
       },
+      {
+        hostname: "marketplace.vishnuverse.xyz",
+        protocol: "https",
+      },
     ],
   },
 };
