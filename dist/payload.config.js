@@ -14,6 +14,9 @@ var Products_1 = require("./collections/Products/Products");
 var Media_1 = require("./collections/Media");
 var ProductFile_1 = require("./collections/ProductFile");
 var Orders_1 = require("./collections/Orders");
+var plugin_cloud_storage_1 = require("@payloadcms/plugin-cloud-storage");
+var s3_1 = require("@payloadcms/plugin-cloud-storage/s3");
+console.log(s3_1.s3Adapter);
 dotenv_1.default.config({
     path: path_1.default.resolve(__dirname, "../.env"),
 });
@@ -42,4 +45,42 @@ exports.default = (0, config_1.buildConfig)({
     typescript: {
         outputFile: path_1.default.resolve(__dirname, "payload-types.ts"),
     },
+    plugins: [
+        // Pass the plugin to Payload
+        (0, plugin_cloud_storage_1.cloudStorage)({
+            collections: {
+                // Enable cloud storage for Media collection
+                media: {
+                    // Create the S3 adapter
+                    adapter: (0, s3_1.s3Adapter)({
+                        config: {
+                            // endpoint: process.env.S3_ENDPOINT,
+                            region: process.env.S3_REGION,
+                            credentials: {
+                                accessKeyId: process.env.S3_ACCESS_KEY_ID,
+                                secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+                            },
+                        },
+                        bucket: process.env.S3_BUCKET,
+                    }),
+                    prefix: "media",
+                },
+                product_files: {
+                    // Create the S3 adapter
+                    adapter: (0, s3_1.s3Adapter)({
+                        config: {
+                            // endpoint: process.env.S3_ENDPOINT,
+                            region: process.env.S3_REGION,
+                            credentials: {
+                                accessKeyId: process.env.S3_ACCESS_KEY_ID,
+                                secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+                            },
+                        },
+                        bucket: process.env.S3_BUCKET,
+                    }),
+                    prefix: "product_files",
+                },
+            },
+        }),
+    ],
 });

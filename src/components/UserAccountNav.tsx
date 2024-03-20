@@ -15,6 +15,7 @@ import { useAuth } from "@/hooks/use-auth";
 
 const UserAccountNav = ({ user }: { user: User }) => {
   const { signOut } = useAuth();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="overflow-visible">
@@ -30,7 +31,13 @@ const UserAccountNav = ({ user }: { user: User }) => {
         </div>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link href={"/"}>Seller Dashboard</Link>
+          <Link href={"/cart"}>Cart</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href={"/purchases"}>Purchases</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href={"/sell"}>Seller Dashboard</Link>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={signOut} className="cursor-pointer">
           Logout

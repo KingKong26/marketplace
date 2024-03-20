@@ -101,8 +101,6 @@ const ThankYouPage = async ({ searchParams }: PageProps) => {
 
                   const downloadUrl = (product.product_files as ProductFile)
                     .url as string;
-                  console.log(downloadUrl);
-                  console.log("downloadUrl :>> ", downloadUrl);
                   const { image } = product.images[0];
 
                   return (
